@@ -64,19 +64,14 @@
         <h1>Playwright Python Tutorial</h1>
     </header>
 
-    <nav>
-        <a href="#install-run-tests">Instalación y Ejecución de Tests</a>
-        <a href="#record-tests">Grabación de Tests</a>
-        <a href="#record-videos-options">Grabación de Videos y Otras Opciones</a>
-        <a href="#debug-tests">Depuración</a>
-        <a href="#trace-record-view">Grabar y Ver Trazas</a>
-        <a href="#advanced-locators">Localizadores Avanzados</a>
-        <a href="#common-actions">Acciones Comunes</a>
-        <a href="#common-assertions">Aserciones Comunes</a>
-    </nav>
+     <section id="documentation">
+        <h2>Documentación Oficial</h2>
+        <p>Para más detalles y ejemplos, consulta la <a href="https://playwright.dev/python/docs/intro">documentación oficial de Playwright para Python</a>.</p>
+    </section>
+
 
     <section id="install-run-tests">
-        <h2>1. Instalación y Ejecución de Tests</h2>
+        <h2>Instalación y Ejecución de Tests</h2>
         <p>Para comenzar, asegúrate de tener Python instalado y las dependencias necesarias.</p>
         <h3>Instalación de Python</h3>
         <pre>
@@ -110,105 +105,67 @@ pytest
 python -m pytest
     </pre>
     </section>
+    
 
-    <section id="record-tests">
-        <h2>2. Grabación de Tests</h2>
-        <p>Playwright permite grabar tests automáticamente mediante el comando <code>codegen</code>.</p>
-        <pre>
-# Graba un test interactivo en Playwright
-playwright codegen https://bootcampqa.com
-    </pre>
-        <p>Esto abrirá un navegador donde puedes realizar interacciones, y Playwright generará automáticamente el código
-            de test.</p>
-    </section>
+<section id="advanced-locators">
+    <h2>Localizadores Avanzados</h2>
+    <p>Playwright ofrece una variedad de localizadores para interactuar con elementos en la página. A continuación, se presentan ordenados de más a menos recomendados, basándonos en accesibilidad, facilidad de mantenimiento y robustez:</p>
 
-    <section id="record-videos-options">
-        <h2>3. Grabación de Videos y Otras Opciones</h2>
-        <p>Playwright permite grabar videos de cada test y ajustar varias opciones. Aquí están algunas de las más
-            útiles:</p>
-
-        <h3>Grabar Videos</h3>
-        <pre>
-# Graba un video de cada test
-pytest --video=on
-# Solo graba si falla
-pytest --video=retain-on-failure
-    </pre>
-
-        <h3>Capturas de Pantalla</h3>
-        <pre>
-# Captura una captura de pantalla después de cada test
-pytest --screenshot=on
-# Solo captura si falla
-pytest --screenshot=only-on-failure
-    </pre>
-
-        <h3>Opciones Adicionales</h3>
-        <pre>
-# Ejecuta en modo visible
-pytest --headed
-
-# Emula un dispositivo
-pytest --device="iPhone 12"
-    </pre>
-    </section>
-
-    <section id="debug-tests">
-        <h2>4. Depuración</h2>
-        <p>Para depurar los tests, puedes activar el modo debug en Playwright:</p>
-        <pre>
-set PWDEBUG=1
-pytest -s test_visit_page.py  
-    </pre>
-        <p>Esto abrirá el navegador en modo interactivo para inspeccionar paso a paso lo que sucede durante la prueba.
-        </p>
-    </section>
-
-    <section id="trace-record-view">
-        <h2>5. Grabar y Ver Trazas</h2>
-        <p>Las trazas te permiten revisar exactamente lo que sucedió en cada test, especialmente útil cuando una prueba
-            falla.</p>
-
-        <h3>Grabar Trazas</h3>
-        <pre>
-# Graba una traza de cada prueba
-pytest --tracing=on
-# Solo graba traza si falla
-pytest --tracing=retain-on-failure
-    </pre>
-
-        <h3>Ver las Trazas</h3>
-        <p>Una vez que hayas grabado una traza, puedes verla usando el siguiente comando:</p>
-        <pre>
-playwright show-trace trace.zip
-    </pre>
-    </section>
-
-    <section id="advanced-locators">
-        <h2>6. Localizadores Avanzados</h2>
-        <p>Los localizadores permiten interactuar con elementos en la página. Aquí te dejo una lista ordenada por
-            recomendación de uso:</p>
-
-        <h3>1. Por <code>data-testid</code> (Recomendado)</h3>
-        <pre>
-locator = page.get_by_test_id("submit-button")
-    </pre>
-
-        <h3>2. Por Texto</h3>
-        <pre>
-locator = page.get_by_text("Iniciar sesión")
-    </pre>
-
-        <h3>3. Por Rol</h3>
-        <pre>
+    <h3>1. Por Rol (Recomendado para accesibilidad)</h3>
+    <p>Utiliza <code>get_by_role()</code> para localizar elementos basados en su rol. Este enfoque es ideal para pruebas accesibles y es menos propenso a fallos debido a cambios en el diseño de la página.</p>
+    <pre>
 locator = page.get_by_role("button", name="Enviar")
     </pre>
 
-        <h3>4. Por Selector CSS</h3>
-        <pre>
+    <h3>2. Por Texto</h3>
+    <p>Utiliza <code>get_by_text()</code> para localizar elementos basados en su contenido de texto. Es útil cuando el texto es estable y no cambia frecuentemente.</p>
+    <pre>
+locator = page.get_by_text("Iniciar sesión")
+    </pre>
+
+    <h3>3. Por Etiqueta Asociada (Label)</h3>
+    <p>Utiliza <code>get_by_label()</code> para localizar controles de formulario asociados a un texto de etiqueta. Esto facilita la interacción con formularios y mejora la legibilidad del código.</p>
+    <pre>
+locator = page.get_by_label("Correo Electrónico")
+    </pre>
+
+    <h3>4. Por Placeholder</h3>
+    <p>Utiliza <code>get_by_placeholder()</code> para localizar un campo de entrada basado en el texto de sugerencia (placeholder). Es útil para identificar campos de texto que tienen un placeholder único.</p>
+    <pre>
+locator = page.get_by_placeholder("Introduce tu correo")
+    </pre>
+
+    <h3>5. Por Texto Alternativo (Alt Text)</h3>
+    <p>Utiliza <code>get_by_alt_text()</code> para localizar elementos, generalmente imágenes, basados en su texto alternativo. Es útil para verificar imágenes o elementos gráficos en la página.</p>
+    <pre>
+locator = page.get_by_alt_text("Logo de la empresa")
+    </pre>
+
+    <h3>6. Por Atributo de Título</h3>
+    <p>Utiliza <code>get_by_title()</code> para localizar elementos basados en su atributo de título. Es útil cuando el elemento tiene un atributo <code>title</code> claro y único.</p>
+    <pre>
+locator = page.get_by_title("Cerrar ventana")
+    </pre>
+
+    <h3>7. Por <code>data-testid</code> (Para pruebas específicas)</h3>
+    <p>Utiliza <code>get_by_test_id()</code> para localizar elementos basados en el atributo <code>data-testid</code>. Esto es útil cuando se controlan los atributos de prueba en el código de la aplicación.</p>
+    <pre>
+locator = page.get_by_test_id("submit-button")
+    </pre>
+
+    <h3>8. Uso de Filtros</h3>
+    <p>Playwright permite el uso de filtros para refinar la búsqueda de elementos. Esto es útil cuando hay múltiples elementos similares en la página.</p>
+    <pre>
+locator = page.get_by_role("button").filter(has_text="Enviar")
+    </pre>
+
+    <h3>9. Por Selector CSS (Menos recomendado)</h3>
+    <p>Utiliza selectores CSS solo como último recurso. Aunque son potentes, los selectores CSS pueden ser frágiles y propensos a romperse si cambian los estilos de la página.</p>
+    <pre>
 locator = page.locator("div.contenedor > input[name='email']")
     </pre>
-    </section>
+</section>
+
 
     <section id="common-actions">
         <h2>7. Acciones Comunes</h2>
@@ -276,10 +233,80 @@ expect(locator).to_have_count(5)
     </pre>
     </section>
 
-    <section id="documentation">
-        <h2>9. Documentación Oficial</h2>
-        <p>Para más detalles y ejemplos, consulta la <a href="https://playwright.dev/python/docs/intro">documentación oficial de Playwright para Python</a>.</p>
+
+    <section id="record-tests">
+        <h2>Grabación de Tests</h2>
+        <p>Playwright permite grabar tests automáticamente mediante el comando <code>codegen</code>.</p>
+        <pre>
+# Graba un test interactivo en Playwright
+playwright codegen https://bootcampqa.com
+    </pre>
+        <p>Esto abrirá un navegador donde puedes realizar interacciones, y Playwright generará automáticamente el código
+            de test.</p>
     </section>
+
+    <section id="record-videos-options">
+        <h2>Grabación de Videos y Otras Opciones</h2>
+        <p>Playwright permite grabar videos de cada test y ajustar varias opciones. Aquí están algunas de las más
+            útiles:</p>
+
+        <h3>Grabar Videos</h3>
+        <pre>
+# Graba un video de cada test
+pytest --video=on
+# Solo graba si falla
+pytest --video=retain-on-failure
+    </pre>
+
+        <h3>Capturas de Pantalla</h3>
+        <pre>
+# Captura una captura de pantalla después de cada test
+pytest --screenshot=on
+# Solo captura si falla
+pytest --screenshot=only-on-failure
+    </pre>
+
+        <h3>Opciones Adicionales</h3>
+        <pre>
+# Ejecuta en modo visible
+pytest --headed
+
+# Emula un dispositivo
+pytest --device="iPhone 12"
+    </pre>
+    </section>
+
+    <section id="debug-tests">
+        <h2>4. Depuración</h2>
+        <p>Para depurar los tests, puedes activar el modo debug en Playwright:</p>
+        <pre>
+set PWDEBUG=1
+pytest -s test_visit_page.py  
+    </pre>
+        <p>Esto abrirá el navegador en modo interactivo para inspeccionar paso a paso lo que sucede durante la prueba.
+        </p>
+    </section>
+
+    <section id="trace-record-view">
+        <h2>Grabar y Ver Trazas</h2>
+        <p>Las trazas te permiten revisar exactamente lo que sucedió en cada test, especialmente útil cuando una prueba
+            falla.</p>
+
+        <h3>Grabar Trazas</h3>
+        <pre>
+# Graba una traza de cada prueba
+pytest --tracing=on
+# Solo graba traza si falla
+pytest --tracing=retain-on-failure
+    </pre>
+
+        <h3>Ver las Trazas</h3>
+        <p>Una vez que hayas grabado una traza, puedes verla usando el siguiente comando:</p>
+        <pre>
+playwright show-trace trace.zip
+    </pre>
+    </section>
+   
 
 </body>
 
