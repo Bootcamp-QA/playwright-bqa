@@ -265,7 +265,7 @@ expect(locator).to_contain_text("Texto parcial")
         <h3>Comprobar que una URL Contenga un Texto</h3>
         <pre>
 import re
-expect(page).to_have_url(re.compile(".*dashboard"))
+expect(page).to_have_url("dashboard")
     </pre>
 
         <h3>Comprobar que un Elemento tenga un Color Específico</h3>
