@@ -324,10 +324,9 @@ pytest --device="iPhone 12"
 
     <section id="debug-tests">
         <h2>4. Depuración</h2>
-        <p>Para depurar los tests, puedes activar el modo debug en Playwright:</p>
+        <p>Para depurar los tests, puedes usar page.pause() para parar justo en el punto que quieras y desde ahi inspeccionar los elementos que necesites.</p>
         <pre>
-set PWDEBUG=1
-pytest -s test_visit_page.py  
+page.pause()
     </pre>
         <p>Esto abrirá el navegador en modo interactivo para inspeccionar paso a paso lo que sucede durante la prueba.
         </p>
