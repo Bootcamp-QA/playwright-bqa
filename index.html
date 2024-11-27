@@ -293,15 +293,15 @@ playwright codegen https://bootcampqa.com
 
         <section id="moviles">
         <h2>Test en Moviles</h2>
-        <p>Playwright permite grabar tests automáticamente mediante el comando <code>codegen</code>.</p>
+         <p>Puedes utilizar playwright para saber el tamaño de la pantalla.Si el ancho de la pantalla (width) es mayor a 1024 sera un ordenador, sino sera movil o tablet.</p>
         <pre>
 # Comprobar el tamaño de la pantalla en playwright
     page.viewport_size['width']
     page.viewport_size['height']
     </pre>
-        <p>Si el ancho de la pantalla (width) es mayor a 1024 sera un ordenador, sino sera movil o tablet.</p>
+     <p>Por defecto playwright ejecuta los tests en tamaño escritorio, pero con el comando Device puedes elegir en que tamaño quieres que se ejecute.</p>  
             <pre>
-# Ejecutar con modo telefono movil
+# Ejecutar con Device telefono movil
     pytest --device='iPhone 12'
     </pre>
             <a href='https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json'>Lista de Devices Disponibles </a>
