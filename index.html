@@ -198,19 +198,50 @@ locator = page.get_by_title("Cerrar ventana")
     <pre>
 locator = page.get_by_test_id("submit-button")
     </pre>
+</section>
+    <section id="advanced-locators">
+    <h2>Localizadores Avanzados</h2>
+    <p>Playwright también proporciona localizadores avanzados para escenarios más específicos. Estos métodos permiten mayor precisión y flexibilidad al interactuar con elementos en la página:</p>
 
-    <h3>8. Uso de Filtros</h3>
-    <p>Playwright permite el uso de filtros para refinar la búsqueda de elementos. Esto es útil cuando hay múltiples elementos similares en la página.</p>
+    <h3>1. Filter (Filtrado)</h3>
+    <p>Utiliza <code>filter()</code> para aplicar filtros adicionales a un locator existente. Esto permite encontrar un subconjunto específico de elementos dentro de un conjunto más grande.</p>
     <pre>
-locator = page.get_by_role("button").filter(has_text="Enviar")
+locator = page.locator(".item").filter(has_text="Producto Destacado")
     </pre>
 
-    <h3>9. Por Selector CSS (Menos recomendado)</h3>
-    <p>Utiliza selectores CSS solo como último recurso. Aunque son potentes, los selectores CSS pueden ser frágiles y propensos a romperse si cambian los estilos de la página.</p>
+    <h3>2. First, Last, Nth</h3>
+    <p>Usa <code>first</code>, <code>last</code>, o <code>nth()</code> para seleccionar un elemento específico de una lista de elementos encontrados. Esto es útil cuando necesitas interactuar con el primero, último, o un elemento en una posición específica.</p>
     <pre>
-locator = page.locator("div.contenedor > input[name='email']")
+# Seleccionar el primer elemento
+locator = page.locator(".item").first
+
+# Seleccionar el último elemento
+locator = page.locator(".item").last
+
+# Seleccionar el tercer elemento (índice 2)
+locator = page.locator(".item").nth(2)
+    </pre>
+
+    <h3>3. Locator Anidado</h3>
+    <p>Los localizadores pueden anidarse para interactuar con elementos dentro de un contenedor específico. Este enfoque permite limitar el alcance de búsqueda a un contexto particular.</p>
+    <pre>
+locator = page.locator("div.contenedor").get_by_role("heading", name="Título Principal")
+    </pre>
+
+    <h3>4. Selector CSS</h3>
+    <p>Utiliza <code>locator()</code> con selectores CSS para localizar elementos basados en sus etiquetas, clases, o atributos específicos. Este enfoque es muy flexible pero puede ser menos robusto si los selectores cambian frecuentemente.</p>
+    <pre>
+# Localizar un elemento por etiqueta
+locator = page.locator("h1")
+
+# Localizar un elemento por etiqueta y clase
+locator = page.locator("h1.updite")
+
+# Localizar un elemento con un atributo específico
+locator = page.locator("button[data-action='submit']")
     </pre>
 </section>
+
 
 
     <section id="common-actions">
